@@ -5,12 +5,14 @@ public class Pagina {
 	private Dado chaves[];
 	private Pagina filhos[];
 	private int numeroChaves; // Númerp de elementos inseridos em uma página
+	private Boolean folha;
 
-	public Pagina(int grau) {
+	public Pagina(int grau, Boolean folha) {
 		this.grau = grau;
 		chaves = new Dado[grau];
 		filhos = new Pagina[grau + 1];
 		numeroChaves = 0;
+		this.folha = folha;
 	}
 
 	public int getGrau() {
@@ -25,22 +27,23 @@ public class Pagina {
 		return chaves[indice];
 	}
 
-	public void addChaves(Dado chave, int indice) {
+	public void addChave(Dado chave, int indice) {
 		chaves[indice] = chave;
 	}
 
-	public int addChaves(Dado chave) {
+	public int addChave(Dado chave) {
 		if (numeroChaves == grau)
 			return -1; // Página lotada
 
 		int i = numeroChaves;
-		while (i > 0 && chave.getId() > chaves[i].getId()) {
+		while (i > 0 && chave.getId() < chaves[i-1].getId()) {
 			chaves[i] = chaves[i - 1];
 			filhos[i + 1] = filhos[i];
 			i--;
 		}
 
 		chaves[i] = chave;
+		numeroChaves++;
 		return i;
 	}
 
@@ -66,5 +69,13 @@ public class Pagina {
 
 	public void decrementaNumeroChaves() {
 		numeroChaves--;
+	}
+
+	public Boolean isFolha() {
+		return folha;
+	}
+
+	public void setFolha(Boolean folha) {
+		this.folha = folha;
 	}
 }

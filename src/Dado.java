@@ -1,6 +1,10 @@
 
 public class Dado {
 	private int id;
+	
+	public Dado(int id) {
+		this.id = id;
+	}
 
 	public int getId() {
 		return id;
